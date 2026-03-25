@@ -1,119 +1,161 @@
 import streamlit as st
 
-# --- 1. RESEARCH-GRADE CONFIG & STYLING ---
+# --- 1. ARCHITECTURAL CONFIG ---
 st.set_page_config(
-    page_title="Aether Oracle | Institutional Intelligence",
+    page_title="AETHER ORACLE | Institutional Terminal",
     page_icon="🛡️",
-    layout="wide"
+    layout="wide",
+    initial_sidebar_state="expanded"
 )
 
-# Custom CSS for the "Institutional Alpha" Look
+# --- 2. THE "FORENSIC DARK" CSS OVERRIDE ---
 st.markdown("""
     <style>
-    /* Global Styles */
-    .main { background-color: #0e1117; color: #ffffff; }
-    [data-testid="stSidebar"] { background-color: #161b22; border-right: 1px solid #00FFA3; }
+    /* Force Deep Dark Theme */
+    .stApp {
+        background-color: #050505;
+        color: #E0E0E0;
+    }
     
-    /* The Neon Search/Input Box */
-    div[data-baseweb="input"] {
-        background-color: #1c2128 !important;
-        border: 1px solid #00FFA3 !important;
-        border-radius: 4px !important;
-        color: white !important;
+    /* Hide Streamlit Bloat */
+    #MainMenu {visibility: hidden;}
+    footer {visibility: hidden;}
+    header {visibility: hidden;}
+
+    /* Custom Sidebar - Institutional Slate */
+    [data-testid="stSidebar"] {
+        background-color: #0A0F14;
+        border-right: 1px solid #1E2A35;
+        min-width: 250px !important;
     }
 
-    /* Buttons */
+    /* Terminal-Style Typography */
+    h1, h2, h3 {
+        font-family: 'Inter', sans-serif;
+        font-weight: 700;
+        letter-spacing: -1px;
+        color: #FFFFFF;
+    }
+
+    /* Input Boxes - Low Profile, High Focus */
+    div[data-baseweb="input"] {
+        background-color: #0F171E !important;
+        border: 1px solid #1E2A35 !important;
+        border-radius: 4px !important;
+        color: #00FFA3 !important;
+    }
+
+    /* Custom Cards for Alpha Feed */
+    .alpha-card {
+        background-color: #0F171E;
+        padding: 20px;
+        border-radius: 8px;
+        border-left: 4px solid #00FFA3;
+        margin-bottom: 15px;
+    }
+
+    /* Buttons - The "Execution" Look */
     .stButton>button {
-        background-color: #1c2128;
-        color: #00FFA3;
-        border: 1px solid #00FFA3;
+        background-color: #00FFA3;
+        color: #050505;
+        font-weight: 800;
+        text-transform: uppercase;
+        border: none;
+        border-radius: 4px;
+        padding: 10px 24px;
         width: 100%;
-        font-weight: bold;
+        transition: 0.2s all ease;
     }
     .stButton>button:hover {
-        background-color: #00FFA3;
-        color: #0e1117;
+        background-color: #00D186;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0, 255, 163, 0.2);
     }
 
-    /* Metric Cards for Portfolios */
-    [data-testid="stMetricValue"] { color: #00FFA3 !important; }
+    /* Radio Buttons & Selection */
+    .stRadio [data-testid="stWidgetLabel"] {
+        color: #8899A6 !important;
+        font-size: 0.9rem;
+    }
     </style>
     """, unsafe_allow_html=True)
 
-# --- 2. SIDEBAR NAVIGATION (Restoring all functions) ---
+# --- 3. THE NAVIGATIONAL ARCHITECTURE ---
 with st.sidebar:
-    st.title("🛡️ Aether Oracle")
+    st.image("https://img.icons8.com/nolan/96/shield.png", width=80)
+    st.markdown("# AETHER\n**ORACLE v3.1**")
     st.markdown("---")
+    
     menu = st.radio(
-        "Terminal Navigation",
-        ["Readiness Audit", "Project Oracle (Search)", "Premium Portfolios", "VC Alpha Feed"]
+        "OPERATIONAL MODES",
+        ["INVESTOR AUDIT", "FORENSIC SEARCH", "ALPHA PORTFOLIOS", "VC INTELLIGENCE"]
     )
+    
     st.markdown("---")
-    st.info("Institutional Status: **Active**")
-    st.caption("Aether Infrastructure v2.0.4")
+    st.caption("Network Status: **ENCRYPTED**")
+    st.caption("Market Cycle: **ACCUMULATION**")
 
-# --- 3. FUNCTIONAL LOGIC ---
+# --- 4. TERMINAL CONTENT ---
 
-# PAGE 1: READINESS AUDIT (The 8 Questions)
-if menu == "Readiness Audit":
-    st.header("🛡️ Investor Readiness Audit")
-    st.write("*'[SYSTEM INITIALIZED]: Answer the 8-point directive to assess your 2029 cycle readiness.'*")
+if menu == "INVESTOR AUDIT":
+    st.title("🛡️ Investor Readiness Audit")
+    st.markdown("---")
     
     col1, col2 = st.columns(2)
+    
     with col1:
-        q1 = st.radio("1. The Midnight Crash: BTC drops 30% while you sleep?", ["Buy the dip", "Hold", "Panic"])
-        q2 = st.radio("2. Meme Coin FOMO: Friend makes 10x, you missed it?", ["Indifferent", "Slight FOMO", "Chase"])
-        q3 = st.radio("3. Concentration: % of net worth in one asset?", ["<10%", "25-50%", "100%"])
-        q4 = st.radio("4. Exit Strategy: Do you have written price targets?", ["Yes", "In my head", "No"])
+        st.markdown("### PSYCHOLOGY")
+        q1 = st.radio("1. 30% MIDNIGHT DRAWDOWN", ["STRATEGIC ACCUMULATION", "STRICT HOLD", "LIQUIDATION"])
+        q2 = st.radio("2. MEME-COIN ASYMMETRY", ["ZERO EXPOSURE", "CONTROLLED RISK", "RETAIL CHASE"])
+        
+        st.markdown("### ALLOCATION")
+        q3 = st.radio("3. SINGLE-ASSET DENSITY", ["INSTITUTIONAL (<10%)", "VENTURE (20-40%)", "HIGH LEVERAGE"])
+        q4 = st.radio("4. EXIT ARCHITECTURE", ["TIERED LIMIT ORDERS", "MANUAL DISCRETION", "NO PLAN"])
+
     with col2:
-        q5 = st.radio("5. Custody: Where is your primary stack?", ["Cold Storage", "Exchange", "Hot Wallet"])
-        q6 = st.radio("6. OpSec: Can you explain Impermanent Loss?", ["Expertly", "Vaguely", "No"])
-        q7 = st.radio("7. Macro: Do you track US Treasury yields?", ["Always", "Sometimes", "Never"])
-        q8 = st.radio("8. Horizon: Can you wait 3 years for a thesis?", ["Yes", "Maybe", "No"])
+        st.markdown("### SECURITY")
+        q5 = st.radio("5. CUSTODY PROTOCOL", ["COLD STORAGE / MULTI-SIG", "EXCHANGE / 2FA", "HOT WALLET"])
+        q6 = st.radio("6. TECHNICAL LITERACY", ["EXPERT (SMART CONTRACTS)", "INTERMEDIATE", "RETAIL"])
+        
+        st.markdown("### MACRO")
+        q7 = st.radio("7. FISCAL AWARENESS", ["MACRO-ANCHORED", "CHART-CENTRIC", "NARRATIVE-ONLY"])
+        q8 = st.radio("8. TIME HORIZON", ["MULTI-YEAR CONVICTION", "12-MONTH PIVOT", "SHORT-TERM YIELD"])
 
-    if st.button("Generate Audit Report"):
-        st.success("Audit complete. Your 'Institutional Readiness' is high-conviction.")
+    st.markdown("---")
+    if st.button("GENERATE READINESS REPORT"):
+        st.success("CALCULATING SCORE... 94% READINESS DETECTED.")
 
-# PAGE 2: PROJECT ORACLE (The Search Function)
-elif menu == "Project Oracle (Search)":
-    st.header("🔮 Project Oracle: Forensic Search")
-    st.write("Enter a token ticker to scan for **Red Flags** and **Institutional Fit**.")
-    
-    # Restored Search Box with Neon Styling
-    search_query = st.text_input("🔍 Search Token Ticker", placeholder="e.g. DOT, TAO, RNDR").upper()
-    
-    if st.button("Initialize Forensic Scan"):
-        if search_query:
-            st.subheader(f"Results for: {search_query}")
-            st.info(f"Scanning {search_query} smart contracts and tokenomics...")
-            st.progress(65)
-            st.warning("Note: Liquidity lock expires in 180 days. Proceed with caution.")
-        else:
-            st.error("Please enter a ticker to analyze.")
-
-# PAGE 3: PREMIUM PORTFOLIOS
-elif menu == "Premium Portfolios":
-    st.header("💎 Premium Institutional Portfolios")
-    st.write("Top-tier allocations for the 2026-2029 cycle.")
+elif menu == "FORENSIC SEARCH":
+    st.title("🔍 Project Forensic Search")
+    ticker = st.text_input("ENTER TICKER (DOT, TAO, RNDR)", placeholder="Ticker...").upper()
     
     c1, c2, c3 = st.columns(3)
-    c1.metric("DePIN Alpha", "+142%", "High Conviction")
-    c2.metric("RWA Legacy", "+89%", "Stable")
-    c3.metric("AI Agents", "+312%", "Aggressive")
+    if st.button("EXECUTE SCAN"):
+        st.markdown(f"### SCANNED: {ticker}")
+        st.info("Searching Problem-Solution Fit... OK")
+        st.warning("Analyzing Token Inflation... AT RISK (12.4%)")
+        st.success("Auditing Team Provenance... TIER-1 FOUNDERS")
+
+elif menu == "ALPHA PORTFOLIOS":
+    st.title("💎 Alpha Portfolios")
+    st.markdown("---")
     
-    st.table({
-        "Asset Class": ["DePIN", "AI / Compute", "RWA", "Modular L2"],
-        "Top Pick": ["Helium (HNT)", "Bittensor (TAO)", "Centrifuge (CFG)", "Celestia (TIA)"],
-        "Risk Rating": ["Medium", "High", "Low", "Medium"]
-    })
+    col1, col2, col3 = st.columns(3)
+    col1.metric("DEPIN (BETA)", "+142%", "HNT / RNDR")
+    col2.metric("AI AGENTS", "+312%", "TAO / FET")
+    col3.metric("RWA LEGACY", "+89%", "CFG / ONDO")
 
-# PAGE 4: VC ALPHA FEED
-elif menu == "VC Alpha Feed":
-    st.header("📡 Live VC Alpha Feed")
-    st.markdown("> **Alert:** Polkadot 2.0 Coretime sales beginning. Burn rate increasing.")
-    st.markdown("> **Alert:** BlackRock expansion into tokenized private credit confirmed.")
-    st.markdown("> **Alert:** DePIN demand for GPUs hitting all-time highs.")
+elif menu == "VC INTELLIGENCE":
+    st.title("📡 Live VC Intelligence Feed")
+    st.markdown("""
+    <div class="alpha-card">
+        <strong>[INTEL] POLKADOT 2.0:</strong> Agile Coretime sales shifting DOT toward deflationary burn. High-conviction entry point detected.
+    </div>
+    <div class="alpha-card">
+        <strong>[INTEL] BITTENSOR:</strong> Subnet expansion hitting exponential growth. Institutional nodes increasing by 45%.
+    </div>
+    """, unsafe_allow_html=True)
 
-# --- 4. FOOTER ---
+# --- 5. SYSTEM FOOTER ---
 st.markdown("---")
-st.caption("Aether Oracle | Institutional-Grade Intelligence Platform | © 2026")
+st.caption("Aether Oracle Terminal | Authorized Access Only | 2026-2029 Cycle")
