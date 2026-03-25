@@ -8,9 +8,36 @@ st.set_page_config(page_title="Project Screener | Aether Oracle", page_icon="ðŸ›
 
 st.markdown("""
     <style>
+    /* 1. Base Theme Rules */
     .main { background-color: #0e1117; color: #ffffff; }
     .stTabs [data-baseweb="tab-list"] { gap: 20px; }
-    .stTabs [data-baseweb="tab"] { 
+    
+    /* 2. Institutional Search & Input Styling */
+    /* This targets the boxes you mentioned specifically */
+    div[data-baseweb="input"] {
+        background-color: #1c2128 !important;
+        border: 1px solid #00FFA3 !important;
+        border-radius: 8px !important;
+    }
+    
+    /* This makes the text inside the search box white */
+    input {
+        color: white !important;
+    }
+
+    /* 3. Button & Interactive Accents */
+    .stButton>button {
+        background-color: #1c2128;
+        color: #00FFA3;
+        border: 1px solid #00FFA3;
+        transition: 0.3s;
+    }
+    .stButton>button:hover {
+        background-color: #00FFA3;
+        color: #0e1117;
+    }
+    </style>
+    """, unsafe_allow_html=True)
         height: 50px; white-space: pre; background-color: #1a1c24; 
         border-radius: 5px; color: white; padding: 10px 20px;
     }
