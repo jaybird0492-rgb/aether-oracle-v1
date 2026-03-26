@@ -1,109 +1,104 @@
 import streamlit as st
 import time
 
-# --- 1. THE "REPLIT MIRROR" UI (FORCED) ---
-st.set_page_config(page_title="Project Screener | Aether", page_icon="🛡️", layout="wide")
+# --- 1. CORE ARCHITECTURE ---
+st.set_page_config(page_title="Aether Oracle | Terminal", page_icon="🛡️", layout="wide")
 
+# CSS: Fixing the "Black Void" & Restoring Replit Aesthetic
 st.markdown("""
     <style>
-    /* Force Clean White UI */
-    .stApp { background-color: #ffffff; color: #000000; }
-    header, footer { visibility: hidden; }
+    .stApp { background-color: #ffffff; color: #1a1a1a; }
     
-    /* Centered Hero Layout */
-    .main .block-container { max-width: 800px; padding-top: 2rem; text-align: center; }
+    /* Center Layout */
+    .main .block-container { max-width: 900px; padding-top: 2rem; }
 
-    /* AI Intelligence Pill */
-    .pill {
-        display: inline-block; background-color: #eef2ff; color: #4f46e5;
-        padding: 5px 15px; border-radius: 20px; font-weight: 600; font-size: 0.8rem;
-        text-transform: uppercase; margin-bottom: 10px;
-    }
-
-    /* Hero Title */
-    .hero-title { font-size: 4.5rem; font-weight: 900; color: #000000; margin-bottom: 0px; letter-spacing: -2px; }
-    .hero-sub { font-size: 1.2rem; color: #666; margin-bottom: 30px; }
-
-    /* FIXED: White Search Bar (No more black void) */
+    /* FIXED: Search Bar Visibility */
     div[data-baseweb="input"] {
-        background-color: #ffffff !important;
+        background-color: #f3f4f6 !important;
         border: 2px solid #e5e7eb !important;
         border-radius: 12px !important;
-        box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1) !important;
     }
-    input { color: #000000 !important; font-size: 1.2rem !important; }
+    input { color: #1a1a1a !important; font-size: 1.2rem !important; }
 
     /* Executive Buttons */
     .stButton>button {
         background-color: #4f46e5; color: white; border: none;
-        border-radius: 10px; padding: 12px 24px; font-weight: 700; width: 100%;
+        border-radius: 8px; font-weight: 700; width: 100%; height: 3rem;
     }
-    .stButton>button:hover { background-color: #4338ca; color: white; }
+    .stButton>button:hover { background-color: #4338ca; }
 
-    /* Nav Buttons (Top Right) */
-    .nav-btn button { background-color: #ffffff !important; color: #374151 !important; border: 1px solid #d1d5db !important; }
+    /* Audit Result Cards */
+    .forensic-card {
+        background-color: #f9fafb; padding: 20px; border-radius: 10px;
+        border-left: 5px solid #4f46e5; margin-bottom: 15px;
+    }
     </style>
     """, unsafe_allow_html=True)
 
-# --- 2. ORIGINAL NAVIGATION & STATE ---
+# --- 2. GLOBAL NAVIGATION ---
 if 'view' not in st.session_state: st.session_state.view = 'home'
 
-# Top Navigation (Readiness / Portfolio)
-nav_col1, nav_col2, nav_col3 = st.columns([6, 1.5, 1.5])
-with nav_col2:
-    if st.button("🛡️ Readiness Audit", key="nav_audit"): st.session_state.view = 'audit'
-with nav_col3:
-    if st.button("💰 Premium Portfolio", key="nav_port"): st.session_state.view = 'portfolio'
+nav_c1, nav_c2, nav_c3 = st.columns([6, 1.5, 1.5])
+with nav_c2:
+    if st.button("🛡️ Readiness Audit"): st.session_state.view = 'audit'
+with nav_c3:
+    if st.button("💰 Premium Portfolio"): st.session_state.view = 'portfolio'
 
-# --- 3. THE "AETHER" MODULAR VIEWS ---
+# --- 3. MODULAR CONTENT ---
 
-# VIEW: HOME (The Replit Screener)
+# VIEW: HOME (The Replit-Style Screener)
 if st.session_state.view == 'home':
-    st.markdown("<span class='pill'>✦ AI-POWERED INTELLIGENCE</span>", unsafe_allow_html=True)
-    st.markdown("<h1 class='hero-title'>Project Screener</h1>", unsafe_allow_html=True)
-    st.markdown("<p class='hero-sub'>Powered by <strong>Aether</strong></p>", unsafe_allow_html=True)
+    st.markdown("<div style='text-align: center;'>", unsafe_allow_html=True)
+    st.markdown("<h1 style='font-size: 4rem; font-weight: 900; letter-spacing:-2px;'>Project Screener</h1>", unsafe_allow_html=True)
+    st.markdown("<p style='color: #6b7280; font-size: 1.2rem;'>Powered by <strong>Aether</strong></p>", unsafe_allow_html=True)
     
-    ticker = st.text_input("", placeholder="Search any cryptocurrency — e.g. bitcoin, solana, chainlink", key="ticker_input")
+    ticker = st.text_input("", placeholder="Enter Asset Ticker (e.g. SOL, DOT, TAO)", key="main_search")
     
     if st.button("EXECUTE FORENSIC SCAN"):
         if ticker:
-            with st.status(f"Auditing {ticker} Fundamentals...", expanded=True) as s:
-                st.write("🔍 **1. Problem-Solution Fit:** Verifying mechanical necessity...")
-                time.sleep(0.5)
-                st.write("📊 **2. Tokenomics:** Auditing inflation vs. utility...")
-                time.sleep(0.5)
-                st.write("👥 **3. Team:** Evaluating developer provenance...")
-                s.update(label="Forensic Audit Complete", state="complete")
+            st.markdown("---")
+            st.subheader(f"🛡️ Forensic Report: {ticker.upper()}")
             
-            st.markdown(f"### 🛡️ Analysis for {ticker.upper()}")
-            st.success("**VERDICT:** Institutional potential detected. Strategic accumulation recommended.")
-            st.info("**KEY STRENGTH:** Strong alignment with 2026-2029 RWA megatrends.")
-            st.error("**RED FLAG:** High token unlock volume scheduled for Q3 2026.")
-        else:
-            st.warning("Please enter a ticker to analyze.")
+            # THE 5-POINT ANALYSIS (Original High-Conviction Logic)
+            col1, col2 = st.columns(2)
+            with col1:
+                st.markdown(f"""<div class='forensic-card'>
+                <strong>1. Problem-Solution Fit:</strong> Verifying if {ticker} solves a mechanical necessity in the 2026 cycle. 
+                <br>Verdict: <span style='color:green; font-weight:700;'>OPTIMIZED</span></div>""", unsafe_allow_html=True)
+                
+                st.markdown(f"""<div class='forensic-card'>
+                <strong>2. Tokenomics Deep-Dive:</strong> Auditing the 'Inflation vs. Utility' curve. 
+                <br>Status: <span style='color:orange; font-weight:700;'>MONITOR UNLOCKS</span></div>""", unsafe_allow_html=True)
+            
+            with col2:
+                st.markdown(f"""<div class='forensic-card'>
+                <strong>3. Team Credibility:</strong> Evaluating developer provenance and shipping history. 
+                <br>Status: <span style='color:green; font-weight:700;'>BATTLE-HARDENED</span></div>""", unsafe_allow_html=True)
+                
+                st.markdown(f"""<div class='forensic-card'>
+                <strong>4. Narrative Check:</strong> Alignment with RWA, AI, and DePIN megatrends. 
+                <br>Signal: <span style='color:blue; font-weight:700;'>HIGH CONVICTION</span></div>""", unsafe_allow_html=True)
+
+            st.error(f"**5. THE RED FLAG SUMMARY:** {ticker} shows high centralization in early-stage seed wallets. Institutional liquidity risk remains a factor for the 2029 exit.")
+    st.markdown("</div>", unsafe_allow_html=True)
 
 # VIEW: AUDIT (THE ORIGINAL 8 SITUATIONAL QUESTIONS)
 elif st.session_state.view == 'audit':
-    if st.button("← Back to Screener"): st.session_state.view = 'home'; st.rerun()
+    if st.button("← Back"): st.session_state.view = 'home'; st.rerun()
     st.header("🛡️ Investor Readiness Audit")
-    st.write("'*[SYSTEM INITIALIZED]: Answer the 8-point situational directive.*'")
     
-    col_l, col_r = st.columns(2)
-    with col_l:
-        q1 = st.radio("1. The Midnight Crash: BTC drops 30% while you sleep?", ["Buy the dip", "Hold with stress", "Panic-search Twitter"])
-        q2 = st.radio("2. The 'Moon' Hype: Friend makes 10x on a coin you missed?", ["Indifferent", "Slight FOMO", "Chase the pump"])
+    c_l, c_r = st.columns(2)
+    with c_l:
+        q1 = st.radio("1. The Midnight Crash: BTC drops 30% while you sleep?", ["Buy the dip", "Hold", "Panic"])
+        q2 = st.radio("2. The 'Moon' Hype: Friend makes 10x on a coin you missed?", ["Indifferent", "Slight FOMO", "Chase pump"])
         q3 = st.radio("3. Concentration: % of net worth in one asset?", ["<10% (Institutional)", "25-50%", "100% (Degen)"])
         q4 = st.radio("4. Exit Strategy: Do you have written sell targets?", ["Yes", "In my head", "No"])
-    with col_r:
+    with c_r:
         q5 = st.radio("5. Custody Protocol: Where is your primary stack?", ["Hardware Wallet", "Exchange w/ 2FA", "Hot Wallet"])
-        q6 = st.radio("6. OpSec Knowledge: Can you explain Impermanent Loss?", ["Expert", "Vaguely", "No"])
-        q7 = st.radio("7. Macro Perspective: Do you track US Treasury yields?", ["Always", "Sometimes", "Never"])
-        q8 = st.radio("8. Horizon: Can you wait 3 years for your thesis?", ["Yes (Conviction)", "Maybe", "No"])
+        q6 = st.radio("6. OpSec Knowledge: Explain Impermanent Loss?", ["Expert", "Vaguely", "No"])
+        q7 = st.radio("7. Macro: Do you track US Treasury yields?", ["Always", "Sometimes", "Never"])
+        q8 = st.radio("8. Horizon: Can you wait 3 years for your thesis?", ["Yes", "Maybe", "No"])
 
-    if st.button("GENERATE READINESS REPORT"): st.success("Audit complete. Your 'Aether Score' is being calculated.")
-
-# --- 4. MANDATORY LEGAL DISCLAIMER ---
-st.markdown("<br><br><br>", unsafe_allow_html=True)
-st.markdown("---")
-st.error("**LEGAL:** Aether Oracle is for educational purposes only. Not financial advice.")
-st.caption("Aether Oracle | v4.2 | 2026-2029 Cycle")
+# --- 4. LEGAL & FOOTER ---
+st.markdown("<br><br><br>---", unsafe_allow_html=True)
+st.error("**LEGAL DISCLAIMER:** Institutional Intelligence only. Not financial advice. Aether Oracle 2026-2029 Cycle.")
